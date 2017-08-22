@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * @author luoyh(Roy) - Aug 22, 2017
  */
 public enum KeyedLock {
-	
+	// push
 	LOCK;
 	
 	private static final ConcurrentMap<Object, Lock> LOCKS = new ConcurrentHashMap<>();
