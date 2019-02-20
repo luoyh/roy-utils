@@ -331,4 +331,24 @@ public class BaseController {
     private String val(Object v) {
         return null == v ? "" : v.toString();
     }
+    
+    @Bean
+	public RestTemplate restTemplate() {
+		PoolingHttpClientConnectionManager pool = new PoolingHttpClientConnectionManager();
+		pool.setMaxTotal(200);
+		pool.setDefaultMaxPerRoute(20);
+		
+		HttpClientBuilder hcb = HttpClientBuilder.create();
+		hcb.setConnectionManager(pool);
+		
+		HttpComponentsClientHttpRequestFactory hcchrf = new HttpComponentsClientHttpRequestFactory(hcb.build());
+		hcchrf.setConnectTimeout(5000);
+		hcchrf.setReadTimeout(10000);
+
+		RestTemplate restTemplate = new RestTemplate(messageConverters());
+		restTemplate.setRequestFactory(hcchrf);
+		
+		return restTemplate;
+	}
+	
 }
